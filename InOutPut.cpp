@@ -1,27 +1,22 @@
 #include <stdio.h>
 
 #include "InOutPut.h"
+#include "Utility.h"
 
-void clearBuffer(void){
+void inputCoeffsAndCheck(double coeffs[], const int coeffSize)
+{
 
-    while(getchar()!='\n'){
-        continue;
-    }
-
-}
-
-void inputCoeffsAndCheck(double coeffs[],const int sizeCoeffs){
-
-    int nvalue=0;
+    int nvalue = 0;
 
     printf("Enter a,b,c: ");
 
-    for(int i=0;i<sizeCoeffs;i++)
-        nvalue+=scanf("%lf",&coeffs[i]);
+    for(int i=0;i<coeffSize;i++)
 
-    while(nvalue!=3){
+        nvalue += scanf("%lf", &coeffs[i]);
 
-        nvalue=0;
+    while(nvalue != 3){
+
+        nvalue = 0;
 
         clearBuffer();
 
@@ -29,21 +24,23 @@ void inputCoeffsAndCheck(double coeffs[],const int sizeCoeffs){
 
         printf("Enter a,b,c: ");
 
-        for(int i=0;i<sizeCoeffs;i++)
-            nvalue+=scanf("%lf",&coeffs[i]);
+        for(int i=0;i<coeffSize;i++)
+            nvalue += scanf("%lf", &coeffs[i]);
 
     }
 
 }
 
-void printRoots(double roots[],Number_of_decisions nRoots){
+void printRoots(const double roots[], const Number_of_decisions nRoots)
+{
 
-    switch (nRoots){
+    switch (nRoots)
+    {
         case NO_ROOTS: printf("No Roots\n");
                 break;
-        case ONE_ROOTS: printf("x=%.2lf\n",roots[0]);
+        case ONE_ROOTS: printf("x=%.2lf\n", roots[0]);
                 break;
-        case TWO_ROOTS: printf("x1=%.2lf, x2=%.2lf\n",roots[0],roots[1]);
+        case TWO_ROOTS: printf("x1=%.2lf, x2=%.2lf\n", roots[0], roots[1]);
                 break;
         case INF_ROOTS: printf("Any number\n");
                 break;

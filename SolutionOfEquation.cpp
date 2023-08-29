@@ -3,98 +3,108 @@
 #include <cmath>
 
 #include "SolutionOfEquation.h"
-#include "ZeroComparison.h"
+#include "Utility.h"
 
 
-double dis(double a,double b,double c){
-    return b*b-4*a*c;
-}
-
-Number_of_decisions solveLinear(double b,double c,double * x){
+Number_of_decisions solveLinear(const double b, const double c, double * x)
+{
 
     assert(x != NULL);
 
-    if(zeroComparison(b)==0)
+    if(zeroComparison(b) ==0 )
 
         return zeroComparison(c)==0 ? INF_ROOTS : NO_ROOTS;
 
-    else{
 
-        if(zeroComparison(c)==0)
 
-            *x=0;
+    if(zeroComparison(c)==0)
 
-        else
+        *x=0;
 
-            *x=-c/b;
+    else
 
-        return ONE_ROOTS;
-    }
+        *x=-c/b;
+
+    return ONE_ROOTS;
 }
 
 
- Number_of_decisions solveSquare(double coeffs[],double roots[]){
+ Number_of_decisions solveSquare(const double coeffs[], double roots[])
+ {
 
-    if(zeroComparison(coeffs[0])==0)
+    assert(coeffs != NULL);
+    assert(roots  != NULL);
 
-        return solveLinear(coeffs[1],coeffs[2],&roots[0]);
+    const double a = coeffs[0];
+    const double b = coeffs[1];
+    const double c = coeffs[2];
 
-    else{
+    double *x1 = &roots[0];
+    double *x2 = &roots[1];
 
-        if(zeroComparison(coeffs[1])==0){
+    if(zeroComparison(a) == 0)
 
-            if(zeroComparison(coeffs[2])==0){
+        return solveLinear(b, c, x1);
 
-                roots[0]=roots[1]=0;
 
-                return ONE_ROOTS;
-            }
 
-            else if(zeroComparison(coeffs[0]*coeffs[2])<0){
+    if(zeroComparison(b) == 0)
+    {
 
-                roots[0]=sqrt(-coeffs[2]/coeffs[0]);
-                roots[1]=-roots[0];
+        if(zeroComparison(c) == 0)
+        {
 
-                return TWO_ROOTS;
-            }
-            else
+            *x1 = *x2 = 0;
 
-                return NO_ROOTS;
+            return ONE_ROOTS;
         }
 
-        else{
+        if(zeroComparison(a*c) < 0)
+        {
 
-            if(zeroComparison(coeffs[2])==0){
+            *x1 = sqrt(-c/a);
+            *x2 = -(*x1);
 
-                roots[0]=0;
-                roots[1]=-coeffs[1]/coeffs[0];
-
-                return TWO_ROOTS;
-
-            }
-            else{
-
-                double D=dis(coeffs[0],coeffs[1],coeffs[2]);
-
-                if(zeroComparison(D)==0){
-
-                    roots[0]=roots[1]=-coeffs[1]/(2*coeffs[0]);
-
-                    return ONE_ROOTS;
-                }
-                else if(zeroComparison(D)>0){
-
-                    double sqrt_D=sqrt(D);
-
-                    roots[0]=(-coeffs[1]+sqrt_D)/(2*coeffs[0]);
-                    roots[1]=(-coeffs[1]-sqrt_D)/(2*coeffs[0]);
-
-                    return TWO_ROOTS;
-                }
-                else
-
-                    return NO_ROOTS;
-            }
+            return TWO_ROOTS;
         }
+
+            return NO_ROOTS;
+
     }
+
+
+    if(zeroComparison(c) == 0)
+    {
+
+        *x1 = 0;
+        *x2 = -b/a;
+
+        return TWO_ROOTS;
+
+    }
+
+
+    double D = b*b-4*a*c;
+
+    if(zeroComparison(D) == 0)
+    {
+
+        *x1 = *x2 = -b/(2*a);
+
+        return ONE_ROOTS;
+    }
+
+    if(zeroComparison(D) > 0)
+    {
+
+        double sqrt_D=sqrt(D);
+
+        *x1=(-b+sqrt_D)/(2*a);
+        *x2=(-b-sqrt_D)/(2*a);
+
+        return TWO_ROOTS;
+    }
+
+        return NO_ROOTS;
+
 }

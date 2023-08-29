@@ -10,10 +10,10 @@ struct TestData{
 
 };
 
-void Hello();
+void needSoftwareTesting();
 
 void testAll();
 
-int simpleTest(const TestData * refer, int numTest);
+int testOne(const TestData * refer, int numTest);
 
 

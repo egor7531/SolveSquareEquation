@@ -3,14 +3,17 @@
 
 #include "ProgramTesting.h"
 #include "InOutPut.h"
-#include "ZeroComparison.h"
+#include "Utility.h"
+
+bool checkRoots(double roots[], Number_of_decisions nRoots, double x1ref, double x2ref, Number_of_decisions nRootsRef);
 
 
-void Hello(){
+void needSoftwareTesting()
+{
 
     printf("Hello! I'm a program that solves a quadratic equation.\nDo I need to run a test to verify the program?\n");
 
-    if(getchar()=='y')
+    if(getchar() == 'y')
         testAll();
 
     clearBuffer();
@@ -18,47 +21,56 @@ void Hello(){
 }
 
 
-void testAll(){
+void testAll()
+{
 
-    const int nTests=5;
+    TestData allData[] = {  {0,  0,  5,  0,  0,  NO_ROOTS},
+                            {0,  0,  0,  0,  0, INF_ROOTS},
+                            {1,  0, -4, -2,  2, TWO_ROOTS},
+                            {1, -4,  4,  2,  2, ONE_ROOTS},
+                            {0, -2,  5,2.5,  0, ONE_ROOTS}  };
 
-    TestData allData[nTests]={ {0,0,0,0,0,INF_ROOTS},
-                               {1,0,-4,-2,2,TWO_ROOTS},
-                               {0,0,5,0,0,NO_ROOTS},
-                               {1,-4,4,2,2,ONE_ROOTS},
-                               {0,-2,5,2.5,0,ONE_ROOTS}  };
+    int numSuccessfulTests = 0;
 
-    int nOK=0;
+    int nTests = sizeof(allData)/sizeof(allData[0]);
 
-        for(int i=0;i<nTests;i++)
-            nOK+=simpleTest(&allData[i],i+1);
+    for(int i=0;i<nTests;i++)
+        numSuccessfulTests += testOne(&allData[i], i+1);
 
-    if(nOK==nTests)
+    if(numSuccessfulTests == nTests)
         printf("All tests passed successfully\n");
 
 }
 
-int simpleTest(const TestData * refer, int numTest){
+bool checkRoots(double roots[], Number_of_decisions nRoots, double x1ref, double x2ref, Number_of_decisions nRootsRef)
+{
+    return ( (zeroComparison(roots[0]-x1ref)==0 && zeroComparison(roots[1]-x2ref)==0) ||
+        (zeroComparison(roots[0]-x2ref)==0 && zeroComparison(roots[1]-x1ref)==0) ) &&
+        nRoots==nRootsRef;
+}
+
+int testOne(const TestData * refer, int numTest)
+{
 
     assert(refer != NULL);
 
-    const int sizesizeCoeffsRef=3;
-    double coeffsRef[sizesizeCoeffsRef]={refer->a,refer->b,refer->c};
+    const double coeffsRef[] = {refer->a, refer->b, refer->c};
 
-    const int sizeRootsRef=2;
-    double roots_proverka[sizeRootsRef]={};
+    const int RootSize = 2;
+    double roots[RootSize] = {};
 
-    Number_of_decisions nRoots = solveSquare (coeffsRef,roots_proverka);
+    Number_of_decisions nRoots = solveSquare (coeffsRef, roots);
 
-    if( ( (zeroComparison(roots_proverka[0]-(refer->x1))==0 && zeroComparison(roots_proverka[1]-(refer->x2))==0) ||
-        (zeroComparison(roots_proverka[0]-(refer->x2))==0 && zeroComparison(roots_proverka[1]-(refer->x1))==0) ) &&
-        nRoots==refer->nRootsRef)
+    if(checkRoots(roots, nRoots, refer->x1, refer->x2, refer->nRootsRef))
 
         return 1;
 
     else
+
         printf("FAILED %d Test: x1=%lg, x2=%lg, nRoots=%d\nexpected: x1Ref=%lg, x2Ref=%lg, nRootsRef=%d\n",
-                numTest,roots_proverka[0],roots_proverka[1],nRoots,refer->x1,refer->x2,refer->nRootsRef);
+                numTest,roots[0],roots[1],nRoots,refer->x1,refer->x2,refer->nRootsRef);
         return 0;
 
 }
+
+

@@ -9,21 +9,22 @@
 #include "SolutionOfEquation.h"
 
 
-int main(){
+int main()
+{
 
-    Hello();
+    needSoftwareTesting();
 
-    const int sizeCoeffs = 3;
-    double coeffs[sizeCoeffs] = {};
+    const int coeffSize = 3;
+    double coeffs[coeffSize] = {};
 
-    inputCoeffsAndCheck(coeffs, sizeCoeffs);
+    inputCoeffsAndCheck(coeffs, coeffSize);
 
-    const int sizeRoots=2;
-    double roots[sizeRoots];
+    const int rootSize = 2;
+    double roots[rootSize] = {};
 
-    Number_of_decisions nRoots=solveSquare(coeffs,roots);
+    Number_of_decisions nRoots = solveSquare(coeffs, roots);
 
-    printRoots(roots,nRoots);
+    printRoots(roots, nRoots);
 
     return 0;
 }
