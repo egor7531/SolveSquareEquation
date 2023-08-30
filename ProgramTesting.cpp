@@ -5,20 +5,7 @@
 #include "InOutPut.h"
 #include "Utility.h"
 
-bool checkRoots(double roots[], Number_of_decisions nRoots, double x1ref, double x2ref, Number_of_decisions nRootsRef);
-
-
-void needSoftwareTesting()
-{
-
-    printf("Hello! I'm a program that solves a quadratic equation.\nDo I need to run a test to verify the program?\n");
-
-    if(getchar() == 'y')
-        testAll();
-
-    clearBuffer();
-
-}
+bool checkRoots(double roots[], Number_Roots nRoots, double x1ref, double x2ref, Number_Roots nRootsRef);
 
 
 void testAll()
@@ -42,7 +29,7 @@ void testAll()
 
 }
 
-bool checkRoots(double roots[], Number_of_decisions nRoots, double x1ref, double x2ref, Number_of_decisions nRootsRef)
+bool checkRoots(double roots[], Number_Roots nRoots, double x1ref, double x2ref, Number_Roots nRootsRef)
 {
     return ( (zeroComparison(roots[0]-x1ref)==0 && zeroComparison(roots[1]-x2ref)==0) ||
         (zeroComparison(roots[0]-x2ref)==0 && zeroComparison(roots[1]-x1ref)==0) ) &&
@@ -59,7 +46,7 @@ int testOne(const TestData * refer, int numTest)
     const int RootSize = 2;
     double roots[RootSize] = {};
 
-    Number_of_decisions nRoots = solveSquare (coeffsRef, roots);
+    Number_Roots nRoots = solveSquare (coeffsRef, roots);
 
     if(checkRoots(roots, nRoots, refer->x1, refer->x2, refer->nRootsRef))
 
@@ -72,5 +59,3 @@ int testOne(const TestData * refer, int numTest)
         return 0;
 
 }
-
-

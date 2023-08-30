@@ -1,7 +1,23 @@
+//! @file SolutionOfEquation.cpp - файл, в котором происходит подсчет уравнений (как квадратного, так и линейного)
+
+
+//! #pragma once нужна для того, чтобы не произошло ошибки, т.к. без неё enum будет инициализироваться несколько раз
+
 #pragma once
 
-enum Number_of_decisions {NO_ROOTS, ONE_ROOTS, TWO_ROOTS, INF_ROOTS};
+//! Создания констант enum повышает читабельность кода.
+//! Непонятность типа int не дает понять, что функции и переменные типа Number_Roots принимает конкретный диапозон значений
+//! а именно: 0, 1, 2 ли бесконечность
 
-Number_of_decisions solveLinear(const double b,const double c, double * x);
+enum Number_Roots {NO_ROOTS, ONE_ROOTS, TWO_ROOTS, INF_ROOTS};
 
-Number_of_decisions solveSquare(const double coeffs[],double roots[]);
+//! Функция  solveLinear нужна в том случае, когда a = 0, т.е. ситуация, когда квавдратное ур-е становится линейным
+//! она возвращает кол-во корней, а также считает корни ур-я (если они есть)
+
+Number_Roots solveLinear(const double b,const double c, double * x);
+
+//! Функция  solveSquare считает квадратное ур-е
+//! она возвращает кол-во корней, а также считает его корни (если они есть)
+
+
+Number_Roots solveSquare(const double coeffs[],double roots[]);

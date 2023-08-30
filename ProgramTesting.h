@@ -6,11 +6,9 @@ struct TestData{
 
     double x1,x2;
 
-    Number_of_decisions nRootsRef;
+    Number_Roots nRootsRef;
 
 };
-
-void needSoftwareTesting();
 
 void testAll();
 

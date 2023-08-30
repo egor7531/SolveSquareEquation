@@ -6,7 +6,7 @@
 #include "Utility.h"
 
 
-Number_of_decisions solveLinear(const double b, const double c, double * x)
+Number_Roots solveLinear(const double b, const double c, double * x)
 {
 
     assert(x != NULL);
@@ -29,7 +29,7 @@ Number_of_decisions solveLinear(const double b, const double c, double * x)
 }
 
 
- Number_of_decisions solveSquare(const double coeffs[], double roots[])
+ Number_Roots solveSquare(const double coeffs[], double roots[])
  {
 
     assert(coeffs != NULL);
