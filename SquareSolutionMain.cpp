@@ -11,17 +11,14 @@
 #include <cmath>
 #include <cassert>
 #include <TXlib.h>
-#include <string.h>
 
-#include "ProgramTesting.h"
 #include "InOutPut.h"
 #include "SolutionOfEquation.h"
-
+#include "Options.h"
 
 int main(int argc, char * argv[])
 {
-    if(argc>1 && !strcmp(argv[1],"-test"))
-        testAll();
+    Options(argv, argc);
 
     const int coeffSize = 3;
     double coeffs[coeffSize] = {};
